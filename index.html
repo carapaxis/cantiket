@@ -112,8 +112,12 @@
 
     .randomize {
       position: absolute;
-      left: 50%;
+      left: 0;
+      right: 0;
       bottom: 0;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
       border: 0;
       padding: 0.2rem 0.4rem;
       font-size: clamp(2.2rem, 6vw, 4rem);
@@ -133,12 +137,12 @@
     }
 
     .randomize:hover {
-      transform: translateX(-50%) scale(1.08);
+      transform: scale(1.08);
       filter: drop-shadow(0 5px 0 rgba(0, 0, 0, 0.8));
     }
 
     .randomize:active {
-      transform: translateX(-50%) scale(0.96);
+      transform: scale(0.96);
     }
 
     .show-all {
@@ -199,10 +203,10 @@
     @keyframes buttonPulse {
       0%,
       100% {
-        transform: translateX(-50%) scale(1);
+        transform: scale(1);
       }
       50% {
-        transform: translateX(-50%) scale(1.14);
+        transform: scale(1.14);
       }
     }
 
