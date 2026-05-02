@@ -105,9 +105,11 @@
     }
 
     .randomize {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
       border: 0;
       padding: 0.2rem 0.4rem;
-      margin-top: -5rem;
       font-size: clamp(2.2rem, 6vw, 4rem);
       font-weight: 700;
       letter-spacing: 0.03em;
@@ -118,15 +120,16 @@
       filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
       animation: buttonPulse 1.8s ease-in-out infinite;
       transition: transform 160ms ease, filter 180ms ease;
+      z-index: 3;
     }
 
     .randomize:hover {
-      transform: scale(1.08);
+      transform: translateX(-50%) scale(1.08);
       filter: drop-shadow(0 5px 0 rgba(0, 0, 0, 0.8));
     }
 
     .randomize:active {
-      transform: scale(0.96);
+      transform: translateX(-50%) scale(0.96);
     }
 
     @keyframes floatBounce {
@@ -158,10 +161,10 @@
     @keyframes buttonPulse {
       0%,
       100% {
-        transform: scale(1);
+        transform: translateX(-50%) scale(1);
       }
       50% {
-        transform: scale(1.14);
+        transform: translateX(-50%) scale(1.14);
       }
     }
 
@@ -203,8 +206,8 @@
     <div class="germ-wrap">
       <div id="germLabel" class="germ-label"></div>
       <img id="germImage" class="germ" src="" alt="Random germ image" />
+      <button id="randomBtn" class="randomize" type="button">RANDOMIZE</button>
     </div>
-    <button id="randomBtn" class="randomize" type="button">Randomize</button>
   </main>
 
   <script>
