@@ -35,6 +35,7 @@
       padding: 1.5rem;
       z-index: 1;
       position: relative;
+      overflow: visible;
     }
 
     body::before {
@@ -75,6 +76,10 @@
       filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
       animation: labelFloat 1.8s ease-in-out infinite;
       white-space: nowrap;
+      max-width: 82%;
+      text-align: center;
+      line-height: 0.9;
+      overflow-wrap: anywhere;
       pointer-events: none;
       z-index: 2;
     }
@@ -122,6 +127,9 @@
       animation: buttonPulse 1.8s ease-in-out infinite;
       transition: transform 160ms ease, filter 180ms ease;
       z-index: 3;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 1;
     }
 
     .randomize:hover {
@@ -226,6 +234,25 @@
       }
       50% {
         transform: translateX(-50%) rotate(-15deg) scale(1.1);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stage {
+        width: 100vw;
+        padding: 1rem 0.75rem 1.4rem;
+      }
+
+      .germ-label {
+        top: 14%;
+        font-size: clamp(2rem, 11vw, 3.2rem);
+        max-width: 86%;
+      }
+
+      .randomize {
+        bottom: 0.2rem;
+        font-size: clamp(1.5rem, 9vw, 2.5rem);
+        max-width: 90%;
       }
     }
 
