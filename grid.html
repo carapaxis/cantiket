@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Germs</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Verdana", sans-serif;
+      background: hsl(150, 70%, 88%);
+      transition: background-color 180ms linear;
+      overflow-x: hidden;
+      color: #143024;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      width: 220vmax;
+      height: 220vmax;
+      top: 50%;
+      left: 50%;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 10px, transparent 11px);
+      background-size: 52px 52px;
+      opacity: 0.65;
+      z-index: 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1200px, 94vw);
+      margin: 2rem auto 3rem;
+    }
+
+    .back {
+      position: fixed;
+      top: 0.9rem;
+      left: 1rem;
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #f93cd9;
+      font-family: "Cooper Black", "Arial Rounded MT Bold", "Comic Sans MS", cursive;
+      text-decoration: none;
+      filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.85));
+      animation: bob 1.8s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .back:hover {
+      transform: scale(1.08);
+    }
+
+    h1 {
+      margin: 0 0 1rem;
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.04em;
+      color: #ff2290;
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
+      font-family: "Cooper Black", "Arial Rounded MT Bold", "Comic Sans MS", cursive;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      display: grid;
+      gap: 0.5rem;
+      justify-items: center;
+      padding: 0.2rem;
+    }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      filter: drop-shadow(-8px 8px 0 rgba(16, 44, 31, 0.4));
+    }
+
+    .card.rolled img {
+      animation: floatBounce 1.8s ease-in-out infinite;
+      transition: filter 220ms ease;
+      transform-origin: center;
+      cursor: pointer;
+    }
+
+    .card.rolled img:hover {
+      animation: hoverAlive 1.1s ease-in-out infinite;
+      filter: drop-shadow(-14px 16px 0 rgba(13, 36, 25, 0.3)) saturate(1.1);
+    }
+
+    .card.unrolled img {
+      filter: grayscale(1) saturate(0) drop-shadow(-8px 8px 0 rgba(16, 44, 31, 0.35));
+    }
+
+    .name {
+      text-align: center;
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 700;
+      word-break: break-word;
+      font-family: "Brush Script MT", "Lucida Handwriting", "Segoe Script", cursive;
+      filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.75));
+    }
+
+    @keyframes bob {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes floatBounce {
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-22px) scale(1.01);
+      }
+    }
+
+    @keyframes hoverAlive {
+      0%,
+      100% {
+        transform: translateY(0) scale(1.04) rotateZ(-2deg);
+      }
+      25% {
+        transform: translateY(-14px) scale(1.07) rotateZ(2deg);
+      }
+      50% {
+        transform: translateY(-22px) scale(1.08) rotateZ(-1deg);
+      }
+      75% {
+        transform: translateY(-12px) scale(1.06) rotateZ(2deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="index.html">BACK</a>
+  <main class="page">
+    <h1>Germ Grid</h1>
+    <section id="grid" class="grid"></section>
+  </main>
+
+  <script>
+    const images = [
+      "germs/germ_aji.png",
+      "germs/germ_alexandria.png",
+      "germs/germ_almond.png",
+      "germs/germ_aoko.png",
+      "germs/germ_axel.png",
+      "germs/germ_bird.png",
+      "germs/germ_brigitte.png",
+      "germs/germ_camille.png",
+      "germs/germ_carina.png",
+      "germs/germ_chanwook.png",
+      "germs/germ_chenyi.png",
+      "germs/germ_cheryl.png",
+      "germs/germ_cillian.png",
+      "germs/germ_clove.png",
+      "germs/germ_daniel.png",
+      "germs/germ_diablo.png",
+      "germs/germ_dion.png",
+      "germs/germ_dolana.png",
+      "germs/germ_five.png",
+      "germs/germ_frankie.png",
+      "germs/germ_giles.png",
+      "germs/germ_goldie.png",
+      "germs/germ_guy.png",
+      "germs/germ_haitao.png",
+      "germs/germ_hanya.png",
+      "germs/germ_havi.png",
+      "germs/germ_hoying.png",
+      "germs/germ_huizhong.png",
+      "germs/germ_isa.png",
+      "germs/germ_jett.png",
+      "germs/germ_jj.png",
+      "germs/germ_joan.png",
+      "germs/germ_johannes.png",
+      "germs/germ_john.png",
+      "germs/germ_jolene.png",
+      "germs/germ_kc.png",
+      "germs/germ_kelly.png",
+      "germs/germ_kipper.png",
+      "germs/germ_kira.png",
+      "germs/germ_lala.png",
+      "germs/germ_leo.png",
+      "germs/germ_luther.png",
+      "germs/germ_mari.png",
+      "germs/germ_miki.png",
+      "germs/germ_mikio.png",
+      "germs/germ_nama.png",
+      "germs/germ_pacifica.png",
+      "germs/germ_phi.png",
+      "germs/germ_ren.png",
+      "germs/germ_sam.png",
+      "germs/germ_samantha.png",
+      "germs/germ_saul.png",
+      "germs/germ_savannah.png",
+      "germs/germ_seulki.png",
+      "germs/germ_shu hua.png",
+      "germs/germ_sidney.png",
+      "germs/germ_sloane.png",
+      "germs/germ_somsak.png",
+      "germs/germ_songyi.png",
+      "germs/germ_spencer.png",
+      "germs/germ_tetsuo.png",
+      "germs/germ_tutu.png",
+      "germs/germ_vasily.png",
+      "germs/germ_venom.png",
+      "germs/germ_zachary.png"
+    ];
+
+    const grid = document.getElementById("grid");
+    const ROLLED_STORAGE_KEY = "rolledGerms";
+
+    function getRandomPastelColor() {
+      const hue = Math.floor(Math.random() * 360);
+      const saturation = 65 + Math.floor(Math.random() * 15);
+      const lightness = 84 + Math.floor(Math.random() * 8);
+      return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    }
+
+    function getRandomBrightColor() {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 95%, 55%)`;
+    }
+
+    function getRolledSet() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(ROLLED_STORAGE_KEY) || "[]");
+        return new Set(Array.isArray(parsed) ? parsed : []);
+      } catch {
+        return new Set();
+      }
+    }
+
+    const rolledSet = getRolledSet();
+
+    for (const path of images) {
+      const card = document.createElement("article");
+      card.className = "card";
+      const wasRolled = rolledSet.has(path);
+      if (wasRolled) {
+        card.classList.add("rolled");
+      } else {
+        card.classList.add("unrolled");
+      }
+
+      const img = document.createElement("img");
+      img.src = path;
+      img.alt = path;
+
+      const name = document.createElement("div");
+      name.className = "name";
+      name.style.color = wasRolled ? getRandomBrightColor() : "#444";
+      name.textContent = path.split("/").pop().replace(/^germ_/, "").replace(/\.[^.]+$/, "");
+
+      card.appendChild(img);
+      card.appendChild(name);
+      grid.appendChild(card);
+    }
+
+    setInterval(() => {
+      document.body.style.backgroundColor = getRandomPastelColor();
+    }, 300);
+  </script>
+</body>
+</html>

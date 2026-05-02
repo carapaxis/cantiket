@@ -34,6 +34,7 @@
       gap: 1.25rem;
       padding: 1.5rem;
       z-index: 1;
+      position: relative;
     }
 
     body::before {
@@ -132,6 +133,35 @@
       transform: translateX(-50%) scale(0.96);
     }
 
+    .show-all {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.8rem;
+      border: 0;
+      padding: 0.15rem 0.35rem;
+      font-size: clamp(1rem, 2.2vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #f93cd9;
+      background: transparent;
+      cursor: pointer;
+      font-family: "Cooper Black", "Arial Rounded MT Bold", "Comic Sans MS", cursive;
+      filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.85));
+      animation: buttonPulse 1.8s ease-in-out infinite;
+      transition: transform 160ms ease, filter 180ms ease;
+      text-decoration: none;
+      z-index: 5;
+    }
+
+    .show-all:hover {
+      transform: scale(1.08);
+      filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.8));
+    }
+
+    .show-all:active {
+      transform: scale(0.96);
+    }
+
     @keyframes floatBounce {
       0%,
       100% {
@@ -203,6 +233,7 @@
 </head>
 <body>
   <main class="stage">
+    <a class="show-all" href="grid.html">SHOW ALL</a>
     <div class="germ-wrap">
       <div id="germLabel" class="germ-label"></div>
       <img id="germImage" class="germ" src="" alt="Random germ image" />
@@ -282,6 +313,7 @@
     const germImage = document.getElementById("germImage");
     const germLabel = document.getElementById("germLabel");
     const randomBtn = document.getElementById("randomBtn");
+    const ROLLED_STORAGE_KEY = "rolledGerms";
 
     let currentIndex = -1;
     let isRolling = false;
@@ -313,6 +345,26 @@
     function getRandomBrightColor() {
       const hue = Math.floor(Math.random() * 360);
       return `hsl(${hue}, 95%, 60%)`;
+    }
+
+    function getRolledSet() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(ROLLED_STORAGE_KEY) || "[]");
+        return new Set(Array.isArray(parsed) ? parsed : []);
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveRolledSet(rolledSet) {
+      localStorage.setItem(ROLLED_STORAGE_KEY, JSON.stringify([...rolledSet]));
+    }
+
+    function markCurrentGermAsRolled() {
+      if (currentIndex < 0) return;
+      const rolledSet = getRolledSet();
+      rolledSet.add(images[currentIndex]);
+      saveRolledSet(rolledSet);
     }
 
     function playSelectionAnimation() {
@@ -355,6 +407,7 @@
 
       const finalIndex = getRandomIndexExcept(currentIndex);
       showImageAtIndex(finalIndex);
+      markCurrentGermAsRolled();
       playSelectionAnimation();
 
       randomBtn.textContent = "RANDOMIZE";
