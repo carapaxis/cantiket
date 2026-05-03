@@ -150,7 +150,7 @@
     .modal-card {
       width: min(680px, 94vw);
       max-height: min(84vh, 920px);
-      overflow-y: auto;
+      overflow: hidden;
       background: #fff;
       border-radius: 18px;
       padding: 1rem;
@@ -176,6 +176,9 @@
       gap: 0.8rem;
       align-items: start;
       margin-top: 0.6rem;
+      max-height: calc(min(84vh, 920px) - 4.2rem);
+      overflow-y: auto;
+      padding-right: 0.25rem;
     }
 
     .modal-text {
