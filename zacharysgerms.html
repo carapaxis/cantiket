@@ -66,7 +66,7 @@
       font-size: clamp(2rem, 4vw, 3rem);
       letter-spacing: 0.04em;
       color: #ff2290;
-      filter: drop-shadow(-1px 2px 1px rgba(0, 0, 0, 0.8));
+      filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.85));
       font-family: "Cooper Black", "Arial Rounded MT Bold", "Comic Sans MS", cursive;
     }
 
@@ -86,7 +86,7 @@
       width: 100%;
       aspect-ratio: 1 / 1;
       object-fit: contain;
-      filter: drop-shadow(-1px 1px 0.5px rgba(70, 93, 82, 0.8));
+      filter: drop-shadow(-8px 8px 0 rgba(16, 44, 31, 0.4));
     }
 
     .card.rolled img {
@@ -98,21 +98,21 @@
 
     .card.rolled img:hover {
       animation: hoverAlive 1.1s ease-in-out infinite;
-      filter: drop-shadow(-5px 10px 1.5px rgba(41, 63, 88, 0.5)) saturate(1.1);
+      filter: drop-shadow(-14px 16px 0 rgba(13, 36, 25, 0.3)) saturate(1.1);
     }
 
     .card.unrolled img {
-      filter: grayscale(1) saturate(0) contrast(0.65) brightness(1.08) drop-shadow(-1px 1px 0.5px rgba(16, 44, 31, 0.8));
+      filter: grayscale(1) saturate(0) contrast(0.65) brightness(1.08) drop-shadow(-8px 8px 0 rgba(16, 44, 31, 0.28));
     }
 
     .name {
       position: absolute;
       left: 50%;
-      top: 65%;
+      top: 68%;
       transform: translateX(-50%);
       width: 88%;
       text-align: center;
-      font-size: clamp(1.8rem, 2.8vw, 2.2rem);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
       font-weight: 700;
       word-break: break-word;
       font-family: "Brush Script MT", "Lucida Handwriting", "Segoe Script", cursive;
@@ -123,14 +123,13 @@
     .card.rolled .name {
       animation: rolledNameFloat 1.9s ease-in-out infinite;
     }
-
-    @keyframes rolledNameFloat {
+     rolledNameFloat {
       0%,
       100% {
         transform: translateX(-50%) translateY(0) scale(1);
       }
       50% {
-        transform: translateX(-50%) translateY(-6px) scale(1);
+        transform: translateX(-50%) translateY(-6px) scale(1.04);
       }
     }
 
@@ -188,14 +187,6 @@
       padding: 0.65rem 0.75rem;
     }
 
-    .modal-signoff {
-      margin: 0.2rem 0 0;
-      font-size: 0.95rem;
-      font-style: italic;
-      opacity: 0.8;
-      text-align: right;
-    }
-
     .modal-group {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -214,7 +205,7 @@
       max-width: 130px;
       aspect-ratio: 1 / 1;
       object-fit: contain;
-      filter: drop-shadow(-1px 1px 0.5px rgba(16, 44, 31, 0.8));
+      filter: drop-shadow(-6px 6px 0 rgba(16, 44, 31, 0.35));
     }
 
     .modal-name {
@@ -271,7 +262,6 @@
       <button id="modalClose" class="modal-close" type="button" aria-label="Close">x</button>
       <div class="modal-body">
         <p id="modalText" class="modal-text"></p>
-        <p id="modalSignoff" class="modal-signoff"></p>
         <div id="modalGroup" class="modal-group"></div>
       </div>
     </div>
@@ -282,11 +272,9 @@
     const modal = document.getElementById("germModal");
     const modalClose = document.getElementById("modalClose");
     const modalText = document.getElementById("modalText");
-    const modalSignoff = document.getElementById("modalSignoff");
     const modalGroup = document.getElementById("modalGroup");
     const ROLLED_STORAGE_KEY = "rolledGerms";
     const GERM_DATA_PATH = "germ_data.json";
-    const MESSAGE_SIGNOFF = "COME AFTERMATH HC WITH ME ON DISC. ADD ME. I'M @carapaxis ON TWT. kisses from arte";
     let munData = [];
 
     function getRandomPastelColor() {
@@ -326,7 +314,6 @@
       modalText.textContent = munObj.message && munObj.message.trim()
         ? munObj.message
         : "No message yet.";
-      modalSignoff.textContent = MESSAGE_SIGNOFF;
       modalGroup.innerHTML = "";
 
       for (const character of munObj.characters) {
@@ -365,7 +352,6 @@
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
       modalText.textContent = "";
-      modalSignoff.textContent = "";
       modalGroup.innerHTML = "";
     }
 
@@ -436,7 +422,7 @@
 
         const name = document.createElement("div");
         name.className = "name";
-        name.style.color = wasRolled ? getRandomBrightColor() : "#999";
+        name.style.color = wasRolled ? getRandomBrightColor() : "#444";
         name.textContent = entry.fileToken;
 
         card.appendChild(img);
